@@ -260,9 +260,13 @@ the pinned `wrangler` devDependency, and `npx wrangler deploy --dry-run` validat
   **Amsterdam** (conference 12–13 November 2025). `talks.json` uses the corrected values.
 - Accent colors were sampled from the icons themselves: PlayTales `#FF9500`, PhotoMemo+
   `#617B92` (the slate coaster), TVGraphs `#8B5CF6` (the purple chart line).
-- The Do iOS YouTube `maxresdefault.jpg` thumbnail is a mid-talk frame showing a slide
-  rather than the speaker — sharp, but arguably off-topic as a card image. Flagged for the
-  user; the low-res `1.jpg` frame shows the title slide but is only 120×90.
+- The Do iOS YouTube `maxresdefault.jpg` thumbnail was a mid-talk frame showing a slide
+  rather than the speaker. At the user's request it was replaced with the video's **very
+  first frame** — the Do iOS title card with the talk title, Peter's name and photo. None
+  of YouTube's served thumbnails is that frame, so it was extracted from the video itself:
+  `yt-dlp --download-sections '*0-8'` for the opening seconds, then
+  `ffmpeg -vf "select=eq(n\,0),scale=1280:720"`. Result committed as `talk-doios.jpg`
+  (1280×720, matching the other talk images).
 
 ## References
 
