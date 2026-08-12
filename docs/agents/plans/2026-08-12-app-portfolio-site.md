@@ -213,9 +213,9 @@ Dependencies: Phase 2 (uses `Base.astro` and the footer)
 Dependencies: Phases 1–3
 
 **Tasks**:
-- [ ] Confirm the peterkurzok.de zone is actually in the user's Cloudflare account (`dig NS peterkurzok.de` shows Cloudflare nameservers + user confirmation) — the photo-memo subdomain only proves it's served somewhere
-- [ ] Add `wrangler.jsonc`: `name: "app-site"` (must match the Worker name chosen in the dashboard import), NO `main` (assets-only Worker), `assets: { directory: "./dist", not_found_handling: "404-page" }`, compatibility date
-- [ ] Add `wrangler` to `devDependencies` (pins the version Workers Builds uses via `npx wrangler deploy`). Do NOT add a local `deploy` npm script — deploys go through git builds only, and a local `wrangler deploy` would clobber the git-deployed version
+- [x] Confirm the peterkurzok.de zone is actually in the user's Cloudflare account (`dig NS peterkurzok.de` shows Cloudflare nameservers + user confirmation) — the photo-memo subdomain only proves it's served somewhere — **FAILED, see Implementation Notes**
+- [x] Add `wrangler.jsonc`: `name: "app-site"` (must match the Worker name chosen in the dashboard import), NO `main` (assets-only Worker), `assets: { directory: "./dist", not_found_handling: "404-page" }`, compatibility date
+- [x] Add `wrangler` to `devDependencies` (pins the version Workers Builds uses via `npx wrangler deploy`). Do NOT add a local `deploy` npm script — deploys go through git builds only, and a local `wrangler deploy` would clobber the git-deployed version
 - [ ] Create public repo `pkurzok/app-site` via `gh repo create`, push `main`
 - [ ] Provide the user a short checklist for the dashboard (cannot be automated without account auth):
   - Workers & Pages → Create → Import repository `pkurzok/app-site`
@@ -236,6 +236,33 @@ Dependencies: Phases 1–3
 ## Implementation Notes
 
 During implementation, document user feedback, problems, and decisions here.
+
+### 2026-08-12 — peterkurzok.de is not a Cloudflare zone (Phase 4 blocker)
+
+`dig NS peterkurzok.de` returns `ns.inwx.de` … `ns5.inwx.de` — the domain's DNS is
+authoritative at INWX, not Cloudflare. `photo-memo.peterkurzok.de` turned out to be a
+CNAME to `pkurzok.github.io` (GitHub Pages, `server: GitHub.com`), which is why the
+subdomain existing proved nothing about Cloudflare.
+
+Cloudflare docs confirm a Workers **Custom Domain** requires "an active Cloudflare zone"
+(<https://developers.cloudflare.com/workers/configuration/routing/custom-domains/>); the
+same holds for Pages custom domains. The CNAME/partial zone setup that would avoid moving
+nameservers is Business/Enterprise only. So `apps.peterkurzok.de` cannot be bound to the
+Worker until the zone is on Cloudflare — this needs a user decision (move nameservers to
+Cloudflare vs. host elsewhere).
+
+Everything else in Phase 4 that does not depend on that decision is done: `wrangler.jsonc`,
+the pinned `wrangler` devDependency, and `npx wrangler deploy --dry-run` validating clean.
+
+### 2026-08-12 — data corrections found while implementing
+
+- The plan wrote "DoiOS 2025" as a German event; it is **Do iOS 2025**, held in
+  **Amsterdam** (conference 12–13 November 2025). `talks.json` uses the corrected values.
+- Accent colors were sampled from the icons themselves: PlayTales `#FF9500`, PhotoMemo+
+  `#617B92` (the slate coaster), TVGraphs `#8B5CF6` (the purple chart line).
+- The Do iOS YouTube `maxresdefault.jpg` thumbnail is a mid-talk frame showing a slide
+  rather than the speaker — sharp, but arguably off-topic as a card image. Flagged for the
+  user; the low-res `1.jpg` frame shows the title slide but is only 120×90.
 
 ## References
 
