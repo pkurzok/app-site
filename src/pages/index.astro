@@ -1,0 +1,83 @@
+---
+import apps from '../data/apps.json';
+import talks from '../data/talks.json';
+import contact from '../data/contact.json';
+
+const now = new Date();
+const sortedTalks = [...talks].sort((a, b) => {
+  const aUpcoming = new Date(a.date) >= now;
+  const bUpcoming = new Date(b.date) >= now;
+  if (aUpcoming !== bUpcoming) return aUpcoming ? -1 : 1;
+  // upcoming: soonest first — past: most recent first
+  return aUpcoming ? a.date.localeCompare(b.date) : b.date.localeCompare(a.date);
+});
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{contact.name} — Apps</title>
+  </head>
+  <body>
+    <header>
+      <img src={contact.portrait} alt={contact.name} width="160" height="160" />
+      <h1>{contact.name}</h1>
+      <p>{contact.tagline}</p>
+      <ul>
+        {contact.channels.map((c) => (
+          <li><a href={c.href}>{c.label}</a></li>
+        ))}
+      </ul>
+    </header>
+
+    <main>
+      <section>
+        <h2>Apps</h2>
+        {apps.map((app) => (
+          <article style={`border-left: 8px solid ${app.accent}`}>
+            <img src={app.icon} alt={`${app.name} app icon`} width="96" height="96" />
+            <h3>{app.name}</h3>
+            <p>{app.tagline}</p>
+            <p>{app.description}</p>
+            {app.link ? (
+              <a href={app.link}>{app.linkLabel}</a>
+            ) : (
+              <span>{app.badge}</span>
+            )}
+          </article>
+        ))}
+      </section>
+
+      <section>
+        <h2>Talks</h2>
+        {sortedTalks.map((talk) => (
+          <article>
+            <img src={talk.image} alt={talk.imageAlt} width="320" height="180" />
+            <h3>{talk.title}</h3>
+            <p>
+              <a href={talk.eventLink}>{talk.event}</a> · {talk.dateLabel} · {talk.location}
+              {new Date(talk.date) >= now && <span> · Upcoming</span>}
+            </p>
+            {talk.videoLink && <a href={talk.videoLink}>Watch on YouTube</a>}
+          </article>
+        ))}
+      </section>
+
+      <section>
+        <h2>Contact</h2>
+        <ul>
+          {contact.channels.map((c) => (
+            <li><a href={c.href}>{c.label}: {c.handle}</a></li>
+          ))}
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>© {now.getFullYear()} {contact.name}</p>
+      <a href="/imprint">Imprint</a>
+      <a href="/privacy">Privacy</a>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+[
+  {
+    "id": "playtales",
+    "name": "PlayTales",
+    "tagline": "Audio plays for little listeners",
+    "description": "A child-friendly player for audio plays and audiobooks, seamlessly connected to Apple Music. Clear, simple, and built for small hands — originally made for my own kids.",
+    "icon": "/icons/playtales.png",
+    "accent": "#FF9500",
+    "link": "https://play-tales.app",
+    "linkLabel": "play-tales.app",
+    "badge": null
+  },
+  {
+    "id": "photomemo",
+    "name": "PhotoMemo+",
+    "tagline": "The classic pairs game, built from your own photos",
+    "description": "Not stock animals — your family. Photo Memo+ turns pictures from your photo library into a memory board for two to four players. One purchase, no ads, no account, and nothing needs an internet connection.",
+    "icon": "/icons/photomemo.png",
+    "accent": "#617B92",
+    "link": "https://photo-memo.peterkurzok.de",
+    "linkLabel": "photo-memo.peterkurzok.de",
+    "badge": null
+  },
+  {
+    "id": "tvgraphs",
+    "name": "TVGraphs",
+    "tagline": "Episode rating charts for every TV series",
+    "description": "Browse what's popular, search the full catalogue, and dive into per-season episode rating charts. A universal SwiftUI app for iPhone, iPad, and Mac, powered by The Movie Database.",
+    "icon": "/icons/tvgraphs.png",
+    "accent": "#8B5CF6",
+    "link": null,
+    "linkLabel": null,
+    "badge": "Coming soon"
+  }
+]

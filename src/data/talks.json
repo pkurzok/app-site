@@ -1,0 +1,38 @@
+[
+  {
+    "id": "mobile-security-iosdevuk-2026",
+    "title": "Mobile Security Fundamentals: Build Apps That Fight Back",
+    "event": "iOSDevUK 2026",
+    "date": "2026-09-07",
+    "dateLabel": "September 7–10, 2026",
+    "location": "Aberystwyth, Wales",
+    "eventLink": "https://www.iosdevuk.com/",
+    "videoLink": null,
+    "image": "/images/talk-iosdevuk.jpg",
+    "imageAlt": "iOSDevUK 2026 speaker card for Peter Kurzok"
+  },
+  {
+    "id": "mobile-security-swiftcon-2026",
+    "title": "Mobile Security Fundamentals: Build Apps That Fight Back",
+    "event": "swiftCon 2026",
+    "date": "2026-10-07",
+    "dateLabel": "October 7–9, 2026",
+    "location": "Berlin, Germany",
+    "eventLink": "https://www.nextappcon.com/swiftcon",
+    "videoLink": null,
+    "image": "/images/talk-swiftcon.png",
+    "imageAlt": "swiftCon 2026 speaker card for Peter Kurzok"
+  },
+  {
+    "id": "devicecheck-doios-2025",
+    "title": "DeviceCheck – Securing your App's Communication",
+    "event": "Do iOS 2025",
+    "date": "2025-11-12",
+    "dateLabel": "November 12–13, 2025",
+    "location": "Amsterdam, Netherlands",
+    "eventLink": "https://www.do-ios.com/2025/#speakers",
+    "videoLink": "https://www.youtube.com/watch?v=iucdTgH0Jwo",
+    "image": "/images/talk-doios.jpg",
+    "imageAlt": "Video thumbnail of the DeviceCheck talk at DoiOS 2025"
+  }
+]

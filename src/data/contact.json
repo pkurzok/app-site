@@ -1,0 +1,32 @@
+{
+  "name": "Peter Kurzok",
+  "tagline": "I build apps for Apple platforms",
+  "intro": "Independent iOS developer from Germany. I ship small, focused apps for iPhone, iPad, and Mac — and talk about mobile security at conferences.",
+  "portrait": "/images/portrait.jpg",
+  "channels": [
+    {
+      "id": "email",
+      "label": "Email",
+      "handle": "apps@peterkurzok.de",
+      "href": "mailto:apps@peterkurzok.de"
+    },
+    {
+      "id": "github",
+      "label": "GitHub",
+      "handle": "@pkurzok",
+      "href": "https://github.com/pkurzok"
+    },
+    {
+      "id": "mastodon",
+      "label": "Mastodon",
+      "handle": "@filmaniac@kind.social",
+      "href": "https://kind.social/@filmaniac"
+    },
+    {
+      "id": "instagram",
+      "label": "Instagram",
+      "handle": "@filmaniac",
+      "href": "https://instagram.com/filmaniac"
+    }
+  ]
+}
