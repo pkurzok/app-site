@@ -216,18 +216,18 @@ Dependencies: Phases 1–3
 - [x] Confirm the peterkurzok.de zone is actually in the user's Cloudflare account (`dig NS peterkurzok.de` shows Cloudflare nameservers + user confirmation) — the photo-memo subdomain only proves it's served somewhere — **FAILED, see Implementation Notes**
 - [x] Add `wrangler.jsonc`: `name: "app-site"` (must match the Worker name chosen in the dashboard import), NO `main` (assets-only Worker), `assets: { directory: "./dist", not_found_handling: "404-page" }`, compatibility date
 - [x] Add `wrangler` to `devDependencies` (pins the version Workers Builds uses via `npx wrangler deploy`). Do NOT add a local `deploy` npm script — deploys go through git builds only, and a local `wrangler deploy` would clobber the git-deployed version
-- [ ] Create public repo `pkurzok/app-site` via `gh repo create`, push `main`
+- [x] Create public repo `pkurzok/app-site` via `gh repo create`, push `main`
 - [ ] Provide the user a short checklist for the dashboard (cannot be automated without account auth):
   - Workers & Pages → Create → Import repository `pkurzok/app-site`
   - Set the Worker name to `app-site` (must match `name` in `wrangler.jsonc`, or builds fail)
   - Build command: `npm run build`; deploy command: `npx wrangler deploy` (reads `wrangler.jsonc`)
-  - Bind custom domain `apps.peterkurzok.de`
+  - Custom domain `apps.peterkurzok.de` **deferred** — the zone is not on Cloudflare (see Implementation Notes); the site serves on `app-site.<subdomain>.workers.dev` until that is resolved
 - [ ] After the user connects: verify live site
 
 **Automated Verification**:
-- [ ] `npm run build && npx wrangler deploy --dry-run` validates the config (dry-run needs `dist/` to exist)
-- [ ] `gh repo view pkurzok/app-site` shows the pushed repo
-- [ ] After connection: `curl -sI https://apps.peterkurzok.de` returns 200
+- [x] `npm run build && npx wrangler deploy --dry-run` validates the config (dry-run needs `dist/` to exist)
+- [x] `gh repo view pkurzok/app-site` shows the pushed repo
+- [ ] After connection: `curl -sI https://apps.peterkurzok.de` returns 200 (deferred with the custom domain — check the `workers.dev` URL instead)
 
 **Manual Verification**:
 - [ ] User completes the Cloudflare dashboard connection + custom domain binding
