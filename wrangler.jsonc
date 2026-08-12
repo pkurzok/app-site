@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Must match the Worker name chosen when importing the repo in the Cloudflare
+  // dashboard, otherwise the git-integrated build fails.
+  "name": "app-site",
+  "compatibility_date": "2026-08-12",
+  // Assets-only Worker: no "main" entrypoint, Cloudflare serves dist/ directly.
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}

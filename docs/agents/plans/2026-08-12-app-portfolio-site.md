@@ -197,16 +197,16 @@ The agreed "tinted app rows" design: hero with portrait, accent-tinted app secti
 Dependencies: Phase 2 (uses `Base.astro` and the footer)
 
 **Tasks**:
-- [ ] Fetch imprint + privacy content from photo-memo.peterkurzok.de, adapt for this site (English, "static site, no tracking, no cookies, hosted on Cloudflare" privacy note; Cloudflare as hosting processor)
-- [ ] `src/pages/imprint.astro` and `src/pages/privacy.astro` using `Base.astro`
-- [ ] `src/pages/404.astro` — minimal styled 404 using `Base.astro`
-- [ ] Verify the footer's Imprint/Privacy links (created in Phase 2) point at the new pages
-- [ ] Commit
+- [x] Fetch imprint + privacy content from photo-memo.peterkurzok.de, adapt for this site (English, "static site, no tracking, no cookies, hosted on Cloudflare" privacy note; Cloudflare as hosting processor)
+- [x] `src/pages/imprint.astro` and `src/pages/privacy.astro` using `Base.astro`
+- [x] `src/pages/404.astro` — minimal styled 404 using `Base.astro`
+- [x] Verify the footer's Imprint/Privacy links (created in Phase 2) point at the new pages
+- [x] Commit
 
 **Automated Verification**:
-- [ ] `npm run build` succeeds; `dist/imprint/index.html`, `dist/privacy/index.html`, and `dist/404.html` exist
-- [ ] `dist/index.html` links to both pages (grep for `imprint` and `privacy` hrefs)
-- [ ] Zero-JS check across all pages: `! grep -rq '<script' dist/`
+- [x] `npm run build` succeeds; `dist/imprint/index.html`, `dist/privacy/index.html`, and `dist/404.html` exist
+- [x] `dist/index.html` links to both pages (grep for `imprint` and `privacy` hrefs)
+- [x] Zero-JS check across all pages: `! grep -rq '<script' dist/`
 
 ### Phase 4: Repository and Cloudflare deployment
 
