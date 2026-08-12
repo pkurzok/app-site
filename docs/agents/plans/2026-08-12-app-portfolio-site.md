@@ -45,9 +45,9 @@ Build a small, custom-designed portfolio site that lists and promotes Peter's ap
 5. **Own /imprint and /privacy pages**, content adapted from the existing PhotoMemo+ pages (https://photo-memo.peterkurzok.de).
    - Why: German law (§5 DDG) requires an Impressum; the site is static with no tracking/cookies, so the privacy page is short.
    - Impact: Two extra Astro pages; content fetched and adapted during implementation.
-6. **Cloudflare Workers static assets + git-integrated builds** (not legacy Pages):
-   - Why: Workers is Cloudflare's current recommended path for static sites; git integration deploys on push.
-   - Impact: `wrangler.jsonc` with an `assets` block pointing at Astro's `dist/`; repo connected + custom domain bound via the Cloudflare dashboard by the user (guided steps provided).
+6. ~~**Cloudflare Workers static assets + git-integrated builds** (not legacy Pages)~~ — **REVERSED during implementation, see Implementation Notes.** Workers custom domains require the zone to be in the Cloudflare account, which `peterkurzok.de` is not. Now: **Cloudflare Pages + git-integrated builds.**
+   - Why: Pages supports custom domains on externally-hosted zones via a CNAME to `<project>.pages.dev`; Workers has no free equivalent. This is the arrangement `playtales.peterkurzok.de` already uses.
+   - Impact: no `wrangler.jsonc` and no `wrangler` dependency; the Pages project is configured with build command `npm run build` and output directory `dist`; the custom domain must be registered in the Pages dashboard *before* the CNAME is created at INWX, or Cloudflare returns 522.
 
 ## Current State
 
@@ -214,23 +214,24 @@ Dependencies: Phases 1–3
 
 **Tasks**:
 - [x] Confirm the peterkurzok.de zone is actually in the user's Cloudflare account (`dig NS peterkurzok.de` shows Cloudflare nameservers + user confirmation) — the photo-memo subdomain only proves it's served somewhere — **FAILED, see Implementation Notes**
-- [x] Add `wrangler.jsonc`: `name: "app-site"` (must match the Worker name chosen in the dashboard import), NO `main` (assets-only Worker), `assets: { directory: "./dist", not_found_handling: "404-page" }`, compatibility date
-- [x] Add `wrangler` to `devDependencies` (pins the version Workers Builds uses via `npx wrangler deploy`). Do NOT add a local `deploy` npm script — deploys go through git builds only, and a local `wrangler deploy` would clobber the git-deployed version
+- [x] ~~Add `wrangler.jsonc`~~ — removed when the project switched to Pages: `name: "app-site"` (must match the Worker name chosen in the dashboard import), NO `main` (assets-only Worker), `assets: { directory: "./dist", not_found_handling: "404-page" }`, compatibility date
+- [x] ~~Add `wrangler` to `devDependencies`~~ — removed when the project switched to Pages (pins the version Workers Builds uses via `npx wrangler deploy`). Do NOT add a local `deploy` npm script — deploys go through git builds only, and a local `wrangler deploy` would clobber the git-deployed version
 - [x] Create public repo `pkurzok/app-site` via `gh repo create`, push `main`
 - [ ] Provide the user a short checklist for the dashboard (cannot be automated without account auth):
-  - Workers & Pages → Create → Import repository `pkurzok/app-site`
-  - Set the Worker name to `app-site` (must match `name` in `wrangler.jsonc`, or builds fail)
-  - Build command: `npm run build`; deploy command: `npx wrangler deploy` (reads `wrangler.jsonc`)
-  - Custom domain `apps.peterkurzok.de` **deferred** — the zone is not on Cloudflare (see Implementation Notes); the site serves on `app-site.<subdomain>.workers.dev` until that is resolved
+  - Workers & Pages → Create → **Pages** → Connect to Git → `pkurzok/app-site`
+  - Project name `app-site` (this sets the `app-site.pages.dev` hostname)
+  - Build command: `npm run build`; build output directory: `dist`
+  - Custom domains → Set up a domain → `apps.peterkurzok.de` **first**, then replace the CNAME at INWX with `apps → app-site.pages.dev` (dashboard-first, or Cloudflare returns 522)
+  - Delete the now-unused `app-site` Worker and its stale `apps` CNAME target
 - [ ] After the user connects: verify live site
 
 **Automated Verification**:
-- [x] `npm run build && npx wrangler deploy --dry-run` validates the config (dry-run needs `dist/` to exist)
+- [x] ~~`npm run build && npx wrangler deploy --dry-run` validates the config~~ — no longer applicable; `npm run build` + `npm run check` cover it
 - [x] `gh repo view pkurzok/app-site` shows the pushed repo
-- [ ] After connection: `curl -sI https://apps.peterkurzok.de` returns 200 (deferred with the custom domain — check the `workers.dev` URL instead)
+- [ ] After connection: `curl -sI https://apps.peterkurzok.de` returns 200
 
 **Manual Verification**:
-- [ ] User completes the Cloudflare dashboard connection + custom domain binding
+- [ ] User completes the Cloudflare Pages connection + custom domain registration + INWX CNAME
 - [ ] Open https://apps.peterkurzok.de and confirm the deployed site renders correctly
 
 ## Implementation Notes
@@ -245,14 +246,28 @@ CNAME to `pkurzok.github.io` (GitHub Pages, `server: GitHub.com`), which is why 
 subdomain existing proved nothing about Cloudflare.
 
 Cloudflare docs confirm a Workers **Custom Domain** requires "an active Cloudflare zone"
-(<https://developers.cloudflare.com/workers/configuration/routing/custom-domains/>); the
-same holds for Pages custom domains. The CNAME/partial zone setup that would avoid moving
-nameservers is Business/Enterprise only. So `apps.peterkurzok.de` cannot be bound to the
-Worker until the zone is on Cloudflare — this needs a user decision (move nameservers to
-Cloudflare vs. host elsewhere).
+(<https://developers.cloudflare.com/workers/configuration/routing/custom-domains/>), so
+`apps.peterkurzok.de` cannot be bound to a Worker while the zone is at INWX.
 
-Everything else in Phase 4 that does not depend on that decision is done: `wrangler.jsonc`,
-the pinned `wrangler` devDependency, and `npx wrangler deploy --dry-run` validating clean.
+**Correction:** the first version of this note also claimed the same restriction applied to
+Pages. That was wrong, and the user's own setup disproves it —
+`playtales.peterkurzok.de` is a `CNAME` to `playtales-web.pages.dev` on the INWX-hosted
+zone, serving 200 with a valid certificate. Pages has a documented external-DNS custom
+domain flow (<https://developers.cloudflare.com/pages/configuration/custom-domains/>):
+register the hostname in the Pages dashboard first, then create the CNAME at the external
+provider — doing it in the other order returns 522. It works for subdomains only; an apex
+domain would still require moving nameservers. `peterkurzok.de` has no CAA records, so
+certificate issuance is not blocked.
+
+The user chose to switch this project from Workers to Pages, matching the playtales setup.
+`wrangler.jsonc` and the `wrangler` devDependency were removed accordingly.
+
+Interim state that was verified along the way: the Workers deploy did work, serving
+correct content at `app-site.cloudflare-972.workers.dev` (all sections present, `/imprint`
+and `/privacy` 307 → trailing slash → 200, unknown paths → the custom 404). A manual
+`CNAME apps → app-site.cloudflare-972.workers.dev` at INWX resolved but served nothing —
+no route binding and no certificate — which is the expected behaviour and confirms the
+diagnosis. That Worker should be deleted once Pages is live.
 
 ### 2026-08-12 — data corrections found while implementing
 

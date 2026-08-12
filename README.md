@@ -4,7 +4,7 @@ Portfolio site for Peter Kurzok's apps and conference talks — live at
 [apps.peterkurzok.de](https://apps.peterkurzok.de).
 
 Static [Astro](https://astro.build) site, no client-side JavaScript, built and hosted
-on Cloudflare Workers static assets.
+on Cloudflare Pages.
 
 ## Development
 
@@ -35,7 +35,25 @@ date, so it only updates on the next deploy.
 
 ## Deployment
 
-Pushing to `main` triggers a Cloudflare Workers Build, which runs `npm run build`
-and then `npx wrangler deploy` (see `wrangler.jsonc`). There is deliberately no
-local deploy script — deploying from a workstation would overwrite the
-git-deployed version.
+Pushing to `main` triggers a Cloudflare Pages build:
+
+| Setting | Value |
+| --- | --- |
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+
+There is deliberately no local deploy script — deploying from a workstation would
+overwrite the git-deployed version.
+
+### Custom domain
+
+`peterkurzok.de` is not a Cloudflare zone; its DNS is authoritative at INWX. Pages
+supports that via its external-DNS flow, and the order matters:
+
+1. In the Pages project, **Custom domains → Set up a domain →** `apps.peterkurzok.de`.
+2. Only then add the `CNAME apps → app-site.pages.dev` record at INWX.
+
+Adding the CNAME first, without registering the hostname in the dashboard, yields a
+522. This is the same arrangement `playtales.peterkurzok.de` already uses. A Cloudflare
+**Workers** custom domain would not work here — that requires the zone to live in the
+Cloudflare account.
