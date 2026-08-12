@@ -15,6 +15,14 @@ interface Talk {
 }
 
 const { talk, upcoming } = Astro.props as { talk: Talk; upcoming: boolean };
+
+// The whole card is one link: to the recording when there is one, otherwise to the
+// event page. When they differ, the event name stays a separate link above the overlay.
+const cardHref = talk.videoLink ?? talk.eventLink;
+const cardLabel = talk.videoLink
+  ? `${talk.title} — watch on YouTube`
+  : `${talk.title} — ${talk.event}`;
+const eventIsCardTarget = !talk.videoLink;
 ---
 
 <article class="card">
@@ -29,9 +37,21 @@ const { talk, upcoming } = Astro.props as { talk: Talk; upcoming: boolean };
   />
   <div class="body">
     {upcoming && <p class="badge">Upcoming</p>}
-    <h3>{talk.title}</h3>
+    <h3>
+      <a class="stretched" href={cardHref} rel="noopener" aria-label={cardLabel}>
+        {talk.title}
+      </a>
+    </h3>
     <p class="meta">
-      <a href={talk.eventLink} rel="noopener">{talk.event}</a>
+      {
+        eventIsCardTarget ? (
+          <span class="event">{talk.event}</span>
+        ) : (
+          <a class="event" href={talk.eventLink} rel="noopener">
+            {talk.event}
+          </a>
+        )
+      }
       <span class="sep" aria-hidden="true">·</span>
       <span>{talk.dateLabel}</span>
       <span class="sep" aria-hidden="true">·</span>
@@ -39,10 +59,10 @@ const { talk, upcoming } = Astro.props as { talk: Talk; upcoming: boolean };
     </p>
     {
       talk.videoLink && (
-        <a class="video" href={talk.videoLink} rel="noopener">
+        <p class="video">
           <Icon name="youtube" size={18} />
           <span>Watch on YouTube</span>
-        </a>
+        </p>
       )
     }
   </div>
@@ -50,6 +70,7 @@ const { talk, upcoming } = Astro.props as { talk: Talk; upcoming: boolean };
 
 <style>
   .card {
+    position: relative;
     display: flex;
     flex-direction: column;
     background: var(--surface-raised);
@@ -57,6 +78,42 @@ const { talk, upcoming } = Astro.props as { talk: Talk; upcoming: boolean };
     border-radius: var(--radius);
     overflow: hidden;
     box-shadow: var(--shadow);
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .card:hover {
+    border-color: var(--text-muted);
+    transform: translateY(-2px);
+  }
+
+  /* The title's link, stretched to cover the whole card */
+  h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .stretched::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .card:hover .stretched {
+    text-decoration: underline;
+  }
+
+  /* Move the focus ring onto the whole card — but only where :has() works, so
+     browsers without it keep the default ring on the title text. */
+  @supports selector(:has(*)) {
+    .stretched:focus-visible {
+      outline: none;
+    }
+
+    .card:has(.stretched:focus-visible) {
+      outline: 2px solid currentColor;
+      outline-offset: 3px;
+    }
   }
 
   .cover {
@@ -99,14 +156,21 @@ const { talk, upcoming } = Astro.props as { talk: Talk; upcoming: boolean };
     color: var(--text-muted);
   }
 
-  .meta a {
+  .event {
     font-weight: 600;
     color: var(--text);
     text-decoration: none;
   }
 
-  .meta a:hover,
-  .meta a:focus-visible {
+  /* Raised above the stretched overlay so the event page stays reachable on cards
+     whose own link points somewhere else (the recording). */
+  a.event {
+    position: relative;
+    z-index: 2;
+  }
+
+  a.event:hover,
+  a.event:focus-visible {
     text-decoration: underline;
   }
 
@@ -114,7 +178,10 @@ const { talk, upcoming } = Astro.props as { talk: Talk; upcoming: boolean };
     margin-inline: 0.35rem;
   }
 
+  /* Not a link any more — the whole card goes here. Kept as the visible cue for
+     where tapping the card leads. */
   .video {
+    margin: 0;
     margin-top: auto;
     padding-top: 1rem;
     display: inline-flex;
@@ -124,12 +191,6 @@ const { talk, upcoming } = Astro.props as { talk: Talk; upcoming: boolean };
     font-size: 0.9375rem;
     font-weight: 600;
     color: #e0322a;
-    text-decoration: none;
-  }
-
-  .video:hover span,
-  .video:focus-visible span {
-    text-decoration: underline;
   }
 
   @media (prefers-color-scheme: dark) {

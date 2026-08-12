@@ -33,6 +33,14 @@ Images live in `public/icons/` (app icons, 1024×1024) and `public/images/`
 The "Upcoming" badge on a talk is derived from its `date` versus the **build**
 date, so it only updates on the next deploy.
 
+Link behaviour follows from the data, with no per-entry configuration:
+
+- An app icon links to the app's `link`. `link: null` (TVGraphs) renders a plain,
+  non-interactive icon.
+- A whole talk card links to its `videoLink` when there is one, otherwise to its
+  `eventLink`. When the two differ, the event name inside the card stays a separate
+  link to `eventLink`, layered above the card-wide overlay.
+
 ## Deployment
 
 Pushing to `main` triggers a Cloudflare Pages build:

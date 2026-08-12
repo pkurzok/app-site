@@ -18,15 +18,31 @@ const { app } = Astro.props as { app: App };
 
 <section class="app-row" style={`--accent: ${app.accent}`} aria-labelledby={`app-${app.id}`}>
   <div class="container inner">
-    <img
-      class="icon"
-      src={app.icon}
-      alt={`${app.name} app icon`}
-      width="128"
-      height="128"
-      loading="lazy"
-      decoding="async"
-    />
+    {
+      app.link ? (
+        <a class="icon-link" href={app.link} rel="noopener" aria-label={`${app.name} — ${app.linkLabel}`}>
+          <img
+            class="icon"
+            src={app.icon}
+            alt={`${app.name} app icon`}
+            width="128"
+            height="128"
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+      ) : (
+        <img
+          class="icon"
+          src={app.icon}
+          alt={`${app.name} app icon`}
+          width="128"
+          height="128"
+          loading="lazy"
+          decoding="async"
+        />
+      )
+    }
     <div class="text">
       <h3 id={`app-${app.id}`}>{app.name}</h3>
       <p class="tagline">{app.tagline}</p>
@@ -70,6 +86,18 @@ const { app } = Astro.props as { app: App };
     border-radius: var(--icon-radius);
     flex-shrink: 0;
     box-shadow: var(--shadow);
+  }
+
+  .icon-link {
+    display: block;
+    flex-shrink: 0;
+    border-radius: var(--icon-radius);
+    transition: transform 0.15s ease;
+  }
+
+  .icon-link:hover,
+  .icon-link:focus-visible {
+    transform: scale(1.04);
   }
 
   h3 {
@@ -138,6 +166,13 @@ const { app } = Astro.props as { app: App };
     .icon {
       width: 128px;
       height: 128px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .icon-link:hover,
+    .icon-link:focus-visible {
+      transform: none;
     }
   }
 </style>
