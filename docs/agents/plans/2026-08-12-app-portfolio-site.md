@@ -173,19 +173,19 @@ Dependencies: Phase 1
 The agreed "tinted app rows" design: hero with portrait, accent-tinted app sections, talks cards, contact sheet, footer. Responsive, light + dark mode.
 
 **Tasks**:
-- [-] `src/layouts/Base.astro`: global CSS with custom properties (light palette on `:root`, dark overrides via `prefers-color-scheme`), system font stack or a single self-hosted font, meta/OG tags (title, description, OG image)
-- [ ] `src/components/Hero.astro`: name, tagline, round-masked portrait, contact icon row (inline SVG icons for mail/GitHub/Mastodon/Instagram)
-- [ ] `src/components/AppRow.astro`: full-width section, background tinted from the app's accent color (subtle, works in both color schemes), large rounded icon (Apple-style squircle radius), title, tagline, description, arrow link — or "Coming soon" badge when `link` is null
-- [ ] `src/components/TalkCard.astro`: talk image, title, event name + date + location (linked to the event page), "Upcoming" badge when the event date is in the future, "Watch on YouTube" link when `videoLink` is present
-- [ ] `src/components/ContactSheet.astro` + `Footer.astro` (copyright, Imprint/Privacy links)
-- [ ] Responsive layout: single column on mobile, comfortable max-width on desktop; icons/images with explicit dimensions (no layout shift)
-- [ ] Favicon (SVG) and OG image
-- [ ] Commit
+- [x] `src/layouts/Base.astro`: global CSS with custom properties (light palette on `:root`, dark overrides via `prefers-color-scheme`), system font stack or a single self-hosted font, meta/OG tags (title, description, OG image)
+- [x] `src/components/Hero.astro`: name, tagline, round-masked portrait, contact icon row (inline SVG icons for mail/GitHub/Mastodon/Instagram)
+- [x] `src/components/AppRow.astro`: full-width section, background tinted from the app's accent color (subtle, works in both color schemes), large rounded icon (Apple-style squircle radius), title, tagline, description, arrow link — or "Coming soon" badge when `link` is null
+- [x] `src/components/TalkCard.astro`: talk image, title, event name + date + location (linked to the event page), "Upcoming" badge when the event date is in the future, "Watch on YouTube" link when `videoLink` is present
+- [x] `src/components/ContactSheet.astro` + `Footer.astro` (copyright, Imprint/Privacy links)
+- [x] Responsive layout: single column on mobile, comfortable max-width on desktop; icons/images with explicit dimensions (no layout shift)
+- [x] Favicon (SVG) and OG image
+- [x] Commit
 
 **Automated Verification**:
-- [ ] `npm run build` succeeds
-- [ ] Zero-JS check passes: `! grep -rq '<script' dist/` (note: plain grep exits 1 on "no match" = success, hence the `!`)
-- [ ] Asset-existence script from Phase 1 still passes
+- [x] `npm run build` succeeds
+- [x] Zero-JS check passes: `! grep -rq '<script' dist/` (note: plain grep exits 1 on "no match" = success, hence the `!`)
+- [x] Asset-existence script from Phase 1 still passes
 
 **Manual Verification**:
 - [ ] `npm run dev` — page matches the agreed mockup: hero with portrait, three tinted app rows with icons, talks, contact, footer
