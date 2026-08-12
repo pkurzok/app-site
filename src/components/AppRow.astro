@@ -1,0 +1,143 @@
+---
+import Icon from './Icon.astro';
+
+interface App {
+  id: string;
+  name: string;
+  tagline: string;
+  description: string;
+  icon: string;
+  accent: string;
+  link: string | null;
+  linkLabel: string | null;
+  badge: string | null;
+}
+
+const { app } = Astro.props as { app: App };
+---
+
+<section class="app-row" style={`--accent: ${app.accent}`} aria-labelledby={`app-${app.id}`}>
+  <div class="container inner">
+    <img
+      class="icon"
+      src={app.icon}
+      alt={`${app.name} app icon`}
+      width="128"
+      height="128"
+      loading="lazy"
+      decoding="async"
+    />
+    <div class="text">
+      <h3 id={`app-${app.id}`}>{app.name}</h3>
+      <p class="tagline">{app.tagline}</p>
+      <p class="description">{app.description}</p>
+      {
+        app.link ? (
+          <a class="cta" href={app.link} rel="noopener">
+            <span>{app.linkLabel}</span>
+            <Icon name="arrow" size={18} />
+          </a>
+        ) : (
+          <p class="badge">{app.badge}</p>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .app-row {
+    background: color-mix(in srgb, var(--accent) var(--tint-strength), var(--bg));
+    border-block: 1px solid color-mix(in srgb, var(--accent) 18%, var(--bg));
+    padding-block: clamp(2rem, 6vw, 3.25rem);
+  }
+
+  /* Collapse the doubled border between consecutive rows */
+  .app-row + .app-row {
+    border-top: 0;
+  }
+
+  .inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .icon {
+    width: 96px;
+    height: 96px;
+    border-radius: var(--icon-radius);
+    flex-shrink: 0;
+    box-shadow: var(--shadow);
+  }
+
+  h3 {
+    font-size: clamp(1.5rem, 4vw, 1.875rem);
+    font-weight: 700;
+  }
+
+  .tagline {
+    margin: 0.4rem 0 0;
+    font-weight: 500;
+    color: color-mix(in srgb, var(--accent) var(--accent-ink-mix), var(--accent-ink-base));
+  }
+
+  .description {
+    margin: 0.75rem 0 0;
+    max-width: 52ch;
+    color: var(--text-muted);
+  }
+
+  .cta,
+  .badge {
+    margin: 1.15rem 0 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-weight: 600;
+  }
+
+  .cta {
+    color: color-mix(in srgb, var(--accent) var(--accent-ink-mix), var(--accent-ink-base));
+    text-decoration: none;
+  }
+
+  .cta :global(svg) {
+    transition: transform 0.15s ease;
+  }
+
+  .cta:hover :global(svg),
+  .cta:focus-visible :global(svg) {
+    transform: translateX(3px);
+  }
+
+  .cta:hover span,
+  .cta:focus-visible span {
+    text-decoration: underline;
+  }
+
+  .badge {
+    font-size: 0.875rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--bg));
+    background: color-mix(in srgb, var(--accent) 12%, var(--bg));
+    color: color-mix(in srgb, var(--accent) var(--accent-ink-mix), var(--accent-ink-base));
+  }
+
+  @media (min-width: 40rem) {
+    .inner {
+      flex-direction: row;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .icon {
+      width: 128px;
+      height: 128px;
+    }
+  }
+</style>

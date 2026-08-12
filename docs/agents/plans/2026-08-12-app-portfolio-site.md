@@ -148,23 +148,23 @@ Dependencies: None
 Astro project with real content wired through data files; builds locally.
 
 **Tasks**:
-- [-] `git init` in `~/ws-privat/app-site`; scaffold Astro (`npm create astro@latest` minimal template, no example content); add `.gitignore` (node_modules, dist, .astro)
-- [ ] Collect and convert assets into `public/`:
-  - [ ] Download PlayTales + PhotoMemo+ icons from their sites/App Store listings
-  - [ ] Copy TVGraphs `AppIcon-1024.png`
-  - [ ] `sips` convert `PeterKurzok.heic` → `talk-iosdevuk.jpg`; copy swiftCon landscape card → `talk-swiftcon.png`; download YouTube thumbnail `img.youtube.com/vi/iucdTgH0Jwo/maxresdefault.jpg` → `talk-doios.jpg`; resize/optimize portrait `_DSC7117_Square.jpeg` → ~800px web image
-- [ ] Create `src/data/apps.json` with all three apps (name, tagline, short description, icon path, accent color hand-picked from each icon, link, `badge: "Coming soon"` + `link: null` for TVGraphs). TVGraphs tagline/description derived from its README (episode-rating charts for TV series, iPhone/iPad/Mac)
-- [ ] Create `src/data/talks.json` with three flat entries: Mobile Security Fundamentals @ iOSDevUK 2026 (Sept 7–10, Aberystwyth, eventLink iosdevuk.com, image talk-iosdevuk.jpg), Mobile Security Fundamentals @ swiftCon 2026 (Oct 7–9, Berlin, eventLink nextappcon.com/swiftcon, image talk-swiftcon.png), DeviceCheck @ DoiOS 2025 (eventLink do-ios.com/2025/#speakers, videoLink youtube.com/watch?v=iucdTgH0Jwo, image talk-doios.jpg)
-- [ ] Create `src/data/contact.json` (email apps@peterkurzok.de, GitHub, Mastodon, Instagram URLs)
-- [ ] Set `site: "https://apps.peterkurzok.de"` in `astro.config.mjs` (needed for absolute OG URLs later)
-- [ ] Create `src/pages/index.astro` rendering all data (unstyled or minimally styled is fine in this phase)
-- [ ] Write `README.md` (what the site is, how to develop/build/deploy)
-- [ ] Commit
+- [x] `git init` in `~/ws-privat/app-site`; scaffold Astro (`npm create astro@latest` minimal template, no example content); add `.gitignore` (node_modules, dist, .astro)
+- [x] Collect and convert assets into `public/`:
+  - [x] Download PlayTales + PhotoMemo+ icons from their sites/App Store listings
+  - [x] Copy TVGraphs `AppIcon-1024.png`
+  - [x] `sips` convert `PeterKurzok.heic` → `talk-iosdevuk.jpg`; copy swiftCon landscape card → `talk-swiftcon.png`; download YouTube thumbnail `img.youtube.com/vi/iucdTgH0Jwo/maxresdefault.jpg` → `talk-doios.jpg`; resize/optimize portrait `_DSC7117_Square.jpeg` → ~800px web image
+- [x] Create `src/data/apps.json` with all three apps (name, tagline, short description, icon path, accent color hand-picked from each icon, link, `badge: "Coming soon"` + `link: null` for TVGraphs). TVGraphs tagline/description derived from its README (episode-rating charts for TV series, iPhone/iPad/Mac)
+- [x] Create `src/data/talks.json` with three flat entries: Mobile Security Fundamentals @ iOSDevUK 2026 (Sept 7–10, Aberystwyth, eventLink iosdevuk.com, image talk-iosdevuk.jpg), Mobile Security Fundamentals @ swiftCon 2026 (Oct 7–9, Berlin, eventLink nextappcon.com/swiftcon, image talk-swiftcon.png), DeviceCheck @ DoiOS 2025 (eventLink do-ios.com/2025/#speakers, videoLink youtube.com/watch?v=iucdTgH0Jwo, image talk-doios.jpg)
+- [x] Create `src/data/contact.json` (email apps@peterkurzok.de, GitHub, Mastodon, Instagram URLs)
+- [x] Set `site: "https://apps.peterkurzok.de"` in `astro.config.mjs` (needed for absolute OG URLs later)
+- [x] Create `src/pages/index.astro` rendering all data (unstyled or minimally styled is fine in this phase)
+- [x] Write `README.md` (what the site is, how to develop/build/deploy)
+- [x] Commit
 
 **Automated Verification**:
-- [ ] `npm run build` succeeds
-- [ ] Built `dist/index.html` contains "PlayTales", "PhotoMemo+", "TVGraphs", "Coming soon", "DeviceCheck", "Mobile Security Fundamentals", and "apps@peterkurzok.de" (grep)
-- [ ] All referenced asset files exist in `dist/` — check with a small script that extracts `src`/`href` asset paths from `dist/**/*.html` and stats the files (Astro does NOT warn about dangling `public/` references)
+- [x] `npm run build` succeeds
+- [x] Built `dist/index.html` contains "PlayTales", "PhotoMemo+", "TVGraphs", "Coming soon", "DeviceCheck", "Mobile Security Fundamentals", and "apps@peterkurzok.de" (grep)
+- [x] All referenced asset files exist in `dist/` — check with a small script that extracts `src`/`href` asset paths from `dist/**/*.html` and stats the files (Astro does NOT warn about dangling `public/` references)
 
 ### Phase 2: Design implementation
 
@@ -173,7 +173,7 @@ Dependencies: Phase 1
 The agreed "tinted app rows" design: hero with portrait, accent-tinted app sections, talks cards, contact sheet, footer. Responsive, light + dark mode.
 
 **Tasks**:
-- [ ] `src/layouts/Base.astro`: global CSS with custom properties (light palette on `:root`, dark overrides via `prefers-color-scheme`), system font stack or a single self-hosted font, meta/OG tags (title, description, OG image)
+- [-] `src/layouts/Base.astro`: global CSS with custom properties (light palette on `:root`, dark overrides via `prefers-color-scheme`), system font stack or a single self-hosted font, meta/OG tags (title, description, OG image)
 - [ ] `src/components/Hero.astro`: name, tagline, round-masked portrait, contact icon row (inline SVG icons for mail/GitHub/Mastodon/Instagram)
 - [ ] `src/components/AppRow.astro`: full-width section, background tinted from the app's accent color (subtle, works in both color schemes), large rounded icon (Apple-style squircle radius), title, tagline, description, arrow link — or "Coming soon" badge when `link` is null
 - [ ] `src/components/TalkCard.astro`: talk image, title, event name + date + location (linked to the event page), "Upcoming" badge when the event date is in the future, "Watch on YouTube" link when `videoLink` is present

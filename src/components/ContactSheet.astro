@@ -1,0 +1,101 @@
+---
+import Icon from './Icon.astro';
+import contact from '../data/contact.json';
+---
+
+<section class="contact container" aria-labelledby="contact-heading">
+  <h2 class="section-title" id="contact-heading">Contact</h2>
+  <p class="lead">
+    Questions about an app, an idea for a talk, or just want to say hello? Any of these
+    reach me.
+  </p>
+  <ul class="sheet">
+    {
+      contact.channels.map((channel) => (
+        <li>
+          <a href={channel.href} rel={channel.href.startsWith('http') ? 'me noopener' : null}>
+            <span class="glyph">
+              <Icon name={channel.id as any} size={20} />
+            </span>
+            <span class="labels">
+              <span class="label">{channel.label}</span>
+              <span class="handle">{channel.handle}</span>
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .contact {
+    padding-block: clamp(3rem, 8vw, 4.5rem) 0;
+  }
+
+  .lead {
+    margin: -0.75rem 0 1.75rem;
+    max-width: 52ch;
+    color: var(--text-muted);
+  }
+
+  .sheet {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 40rem) {
+    .sheet {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .sheet a {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.9rem 1.1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface-raised);
+    text-decoration: none;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .sheet a:hover,
+  .sheet a:focus-visible {
+    border-color: var(--text-muted);
+    transform: translateY(-2px);
+  }
+
+  .glyph {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text-muted);
+  }
+
+  .labels {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .label {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+  }
+
+  .handle {
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+</style>
