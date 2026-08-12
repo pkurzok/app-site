@@ -4,7 +4,7 @@ git_commit: ""
 branch: ""
 topic: "App portfolio site at apps.peterkurzok.de"
 tags: [plan, astro, cloudflare, portfolio-site]
-status: ready
+status: complete
 ---
 
 # PLAN: App portfolio site at apps.peterkurzok.de
@@ -217,22 +217,22 @@ Dependencies: Phases 1–3
 - [x] ~~Add `wrangler.jsonc`~~ — removed when the project switched to Pages: `name: "app-site"` (must match the Worker name chosen in the dashboard import), NO `main` (assets-only Worker), `assets: { directory: "./dist", not_found_handling: "404-page" }`, compatibility date
 - [x] ~~Add `wrangler` to `devDependencies`~~ — removed when the project switched to Pages (pins the version Workers Builds uses via `npx wrangler deploy`). Do NOT add a local `deploy` npm script — deploys go through git builds only, and a local `wrangler deploy` would clobber the git-deployed version
 - [x] Create public repo `pkurzok/app-site` via `gh repo create`, push `main`
-- [ ] Provide the user a short checklist for the dashboard (cannot be automated without account auth):
+- [x] Provide the user a short checklist for the dashboard (cannot be automated without account auth):
   - Workers & Pages → Create → **Pages** → Connect to Git → `pkurzok/app-site`
   - Project name `app-site` (this sets the `app-site.pages.dev` hostname)
   - Build command: `npm run build`; build output directory: `dist`
   - Custom domains → Set up a domain → `apps.peterkurzok.de` **first**, then replace the CNAME at INWX with `apps → app-site.pages.dev` (dashboard-first, or Cloudflare returns 522)
   - Delete the now-unused `app-site` Worker and its stale `apps` CNAME target
-- [ ] After the user connects: verify live site
+- [x] After the user connects: verify live site
 
 **Automated Verification**:
 - [x] ~~`npm run build && npx wrangler deploy --dry-run` validates the config~~ — no longer applicable; `npm run build` + `npm run check` cover it
 - [x] `gh repo view pkurzok/app-site` shows the pushed repo
-- [ ] After connection: `curl -sI https://apps.peterkurzok.de` returns 200
+- [x] After connection: `curl -sI https://apps.peterkurzok.de` returns 200
 
 **Manual Verification**:
-- [ ] User completes the Cloudflare Pages connection + custom domain registration + INWX CNAME
-- [ ] Open https://apps.peterkurzok.de and confirm the deployed site renders correctly
+- [x] User completes the Cloudflare Pages connection + custom domain registration + INWX CNAME
+- [x] Open https://apps.peterkurzok.de and confirm the deployed site renders correctly
 
 ## Implementation Notes
 
@@ -268,6 +268,18 @@ and `/privacy` 307 → trailing slash → 200, unknown paths → the custom 404)
 `CNAME apps → app-site.cloudflare-972.workers.dev` at INWX resolved but served nothing —
 no route binding and no certificate — which is the expected behaviour and confirms the
 diagnosis. That Worker should be deleted once Pages is live.
+
+### 2026-08-12 — live
+
+The user created the Pages project in the dashboard. `apps.peterkurzok.de` is a `CNAME`
+to `app-site-2b3.pages.dev` (Cloudflare appended the `-2b3` suffix; the plan's assumed
+`app-site.pages.dev` was taken). Verified live: HTTP 200 over a valid
+`CN=apps.peterkurzok.de` certificate from Google Trust Services, all content sections
+present, `/imprint` and `/privacy` 200, unknown paths serving the custom 404, all nine
+images and the favicon 200, and no `<script>` tag in the delivered HTML.
+
+Remaining cleanup for the user: delete the obsolete `app-site` Worker
+(`app-site.cloudflare-972.workers.dev`).
 
 ### 2026-08-12 — data corrections found while implementing
 
