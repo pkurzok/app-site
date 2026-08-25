@@ -28,8 +28,8 @@
     "description": "Browse what's popular, search the full catalogue, and dive into per-season episode rating charts. A universal SwiftUI app for iPhone, iPad, and Mac, powered by The Movie Database.",
     "icon": "/icons/tvgraphs.png",
     "accent": "#8B5CF6",
-    "link": null,
-    "linkLabel": null,
+    "link": "https://tvgraphs.peterkurzok.de",
+    "linkLabel": "tvgraphs.peterkurzok.de",
     "badge": "Coming soon"
   }
 ]
