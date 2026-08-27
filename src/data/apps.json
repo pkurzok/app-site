@@ -23,13 +23,13 @@
   },
   {
     "id": "tvgraphs",
-    "name": "TVGraphs",
+    "name": "TV Graphs",
     "tagline": "Episode rating charts for every TV series",
     "description": "Browse what's popular, search the full catalogue, and dive into per-season episode rating charts. A universal SwiftUI app for iPhone, iPad, and Mac, powered by The Movie Database.",
     "icon": "/icons/tvgraphs.png",
     "accent": "#8B5CF6",
     "link": "https://tvgraphs.peterkurzok.de",
     "linkLabel": "tvgraphs.peterkurzok.de",
-    "badge": "Coming soon"
+    "badge": null
   }
 ]
