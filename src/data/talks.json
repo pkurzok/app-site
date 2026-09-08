@@ -8,6 +8,7 @@
     "location": "Aberystwyth, Wales",
     "eventLink": "https://www.iosdevuk.com/",
     "videoLink": null,
+    "slidesLink": "https://speakerdeck.com/pkurzok/mobile-security-fundamentals-build-apps-that-fight-back",
     "image": "/images/talk-iosdevuk.jpg",
     "imageAlt": "iOSDevUK 2026 speaker card for Peter Kurzok"
   },
@@ -20,6 +21,7 @@
     "location": "Berlin, Germany",
     "eventLink": "https://www.nextappcon.com/swiftcon",
     "videoLink": null,
+    "slidesLink": null,
     "image": "/images/talk-swiftcon.png",
     "imageAlt": "swiftCon 2026 speaker card for Peter Kurzok"
   },
@@ -32,6 +34,7 @@
     "location": "Amsterdam, Netherlands",
     "eventLink": "https://www.do-ios.com/2025/#speakers",
     "videoLink": "https://www.youtube.com/watch?v=iucdTgH0Jwo",
+    "slidesLink": "https://speakerdeck.com/pkurzok/device-check-securing-your-apps-communication",
     "image": "/images/talk-doios.jpg",
     "imageAlt": "Title slide of the DeviceCheck talk at Do iOS 2025, with Peter Kurzok's name and photo"
   }

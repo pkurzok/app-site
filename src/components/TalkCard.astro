@@ -10,6 +10,7 @@ interface Talk {
   location: string;
   eventLink: string;
   videoLink: string | null;
+  slidesLink: string | null;
   image: string;
   imageAlt: string;
 }
@@ -58,10 +59,25 @@ const eventIsCardTarget = !talk.videoLink;
       <span>{talk.location}</span>
     </p>
     {
-      talk.videoLink && (
-        <p class="video">
-          <Icon name="youtube" size={18} />
-          <span>Watch on YouTube</span>
+      (talk.videoLink || talk.slidesLink) && (
+        <p class="links">
+          {talk.videoLink && (
+            <span class="link video">
+              <Icon name="youtube" size={18} />
+              <span>Watch on YouTube</span>
+            </span>
+          )}
+          {talk.slidesLink && (
+            <a
+              class="link slides"
+              href={talk.slidesLink}
+              rel="noopener"
+              aria-label={`${talk.title} — slides`}
+            >
+              <Icon name="slides" size={18} />
+              <span>Slides</span>
+            </a>
+          )}
         </p>
       )
     }
@@ -178,19 +194,42 @@ const eventIsCardTarget = !talk.videoLink;
     margin-inline: 0.35rem;
   }
 
-  /* Not a link any more — the whole card goes here. Kept as the visible cue for
-     where tapping the card leads. */
-  .video {
+  .links {
     margin: 0;
     margin-top: auto;
     padding-top: 1rem;
-    display: inline-flex;
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    align-self: flex-start;
-    gap: 0.45rem;
+    gap: 0.4rem 1.1rem;
     font-size: 0.9375rem;
     font-weight: 600;
+  }
+
+  .link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  /* Not a link — the whole card goes to the recording. Kept as the visible cue
+     for where tapping the card leads. */
+  .video {
     color: #e0322a;
+  }
+
+  /* A real link, raised above the stretched overlay so it stays reachable. */
+  a.slides {
+    position: relative;
+    z-index: 2;
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  a.slides:hover,
+  a.slides:focus-visible {
+    color: var(--text);
+    text-decoration: underline;
   }
 
   @media (prefers-color-scheme: dark) {
