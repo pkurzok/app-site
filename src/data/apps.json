@@ -31,5 +31,16 @@
     "link": "https://tvgraphs.peterkurzok.de",
     "linkLabel": "tvgraphs.peterkurzok.de",
     "badge": null
+  },
+  {
+    "id": "inquizitive",
+    "name": "Inquizitive",
+    "tagline": "A fact-checked quiz on anything you're curious about",
+    "description": "Type any topic and Apple Intelligence writes ten questions, researched on Wikipedia while they're written, with an explanation and a source for every answer. Retry what you missed until it sticks. Free to try, no account, on iPhone, iPad, Mac and Apple Vision Pro.",
+    "icon": "/icons/inquizitive.png",
+    "accent": "#0B6E8A",
+    "link": "https://inquizitive.peterkurzok.de",
+    "linkLabel": "inquizitive.peterkurzok.de",
+    "badge": null
   }
 ]
