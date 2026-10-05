@@ -42,5 +42,16 @@
     "link": "https://inquizitive.peterkurzok.de",
     "linkLabel": "inquizitive.peterkurzok.de",
     "badge": null
+  },
+  {
+    "id": "karacho",
+    "name": "Karacho",
+    "tagline": "Your GPS speed in big amber digits",
+    "description": "A full-screen digital speedometer for iPhone: your speed in large seven-segment digits you can read at a glance, with a symbol for walking, cycling or driving. Free to use, no account, no analytics. Pro, a one-time purchase, adds the Siri answer and your speed on the Lock Screen.",
+    "icon": "/icons/karacho.png",
+    "accent": "#FFB020",
+    "link": "https://karacho.peterkurzok.de",
+    "linkLabel": "karacho.peterkurzok.de",
+    "badge": null
   }
 ]
