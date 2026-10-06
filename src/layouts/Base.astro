@@ -37,10 +37,13 @@ const ogImage = new URL('/og-image.png', Astro.site);
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <slot name="head" />
   </head>
   <body>
-    <slot />
-    <Footer />
+    <div class="page">
+      <slot />
+      <Footer />
+    </div>
   </body>
 </html>
 
@@ -105,6 +108,11 @@ const ogImage = new URL('/og-image.png', Astro.site);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+  }
+
+  /* Hides the body colour, which only tints Safari's side bar (see index.astro) */
+  .page {
+    background: var(--bg);
   }
 
   h1,
