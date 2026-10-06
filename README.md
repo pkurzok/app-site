@@ -23,7 +23,7 @@ channel is a data-only edit, no component changes needed.
 
 | File | Contents |
 | --- | --- |
-| `src/data/apps.json` | name, tagline, description, icon path, accent color, link (or `null` + `badge` for unreleased apps) |
+| `src/data/apps.json` | id (must match `[a-z0-9-]+`), name, tagline, description, icon path, accent color, link (or `null` + `badge` for unreleased apps) |
 | `src/data/talks.json` | one entry per talk-at-an-event: title, event, date, location, event link, optional video link, image |
 | `src/data/contact.json` | name, tagline, portrait, contact channels |
 
@@ -32,6 +32,15 @@ Images live in `public/icons/` (app icons, 1024×1024) and `public/images/`
 
 The "Upcoming" badge on a talk is derived from its `date` versus the **build**
 date, so it only updates on the next deploy.
+
+### Safari side bar tint
+
+On a closed iPhone Duo, Safari shows its controls in a bar beside the page and paints
+that bar in the page's `body` background colour. While an app row covers the centre
+of the viewport, the bar takes that row's tint; elsewhere it shows the page background.
+This is CSS only: each row exposes a view timeline, and `src/pages/index.astro`
+generates one scroll-driven `body` animation per entry of `apps.json`. The `.page`
+wrapper in `Base.astro` keeps the body colour hidden behind the content.
 
 Link behaviour follows from the data, with no per-entry configuration:
 

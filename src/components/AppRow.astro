@@ -16,7 +16,11 @@ interface App {
 const { app } = Astro.props as { app: App };
 ---
 
-<section class="app-row" style={`--accent: ${app.accent}`} aria-labelledby={`app-${app.id}`}>
+<section
+  class="app-row"
+  style={`--accent: ${app.accent}; view-timeline-name: --app-${app.id}`}
+  aria-labelledby={`app-${app.id}`}
+>
   <div class="container inner">
     {
       app.link ? (
@@ -63,9 +67,13 @@ const { app } = Astro.props as { app: App };
 
 <style>
   .app-row {
+    /* index.astro repeats this tint formula for Safari's side bar */
     background: color-mix(in srgb, var(--accent) var(--tint-strength), var(--bg));
     border-block: 1px solid color-mix(in srgb, var(--accent) 18%, var(--bg));
     padding-block: clamp(2rem, 6vw, 3.25rem);
+    /* Timeline is active only while the row covers the viewport's centre line */
+    view-timeline-axis: block;
+    view-timeline-inset: 50%;
   }
 
   /* Collapse the doubled border between consecutive rows */

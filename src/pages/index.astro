@@ -18,12 +18,40 @@ const sortedTalks = [...talks].sort((a, b) => {
   // upcoming: soonest first — past: most recent first
   return upcomingA ? a.date.localeCompare(b.date) : b.date.localeCompare(a.date);
 });
+
+// Safari's side bar (iPhone Duo, closed) is painted in the body background colour.
+// While an app row covers the viewport centre, its view timeline drives a body
+// animation that sets the row's tint — the same formula as in AppRow.astro.
+for (const app of apps) {
+  if (!/^[a-z0-9-]+$/.test(app.id)) {
+    throw new Error(`apps.json: id "${app.id}" must match [a-z0-9-]+ (it is used in CSS names)`);
+  }
+}
+const timelines = apps.map((app) => `--app-${app.id}`).join(', ');
+const edgeCss = [
+  ...apps.map(
+    (app) =>
+      `@keyframes edge-${app.id} { from, to { background-color: color-mix(in srgb, ${app.accent} var(--tint-strength), var(--bg)); } }`,
+  ),
+  `@supports (animation-timeline: view()) {
+  body {
+    timeline-scope: ${timelines};
+    animation-name: ${apps.map((app) => `edge-${app.id}`).join(', ')};
+    animation-timeline: ${timelines};
+    animation-range: cover;
+    animation-timing-function: linear;
+    animation-fill-mode: none;
+  }
+}`,
+].join('\n');
 ---
 
 <Base
   title={`${contact.name} — Apps for Apple platforms`}
   description="Apps, conference talks, and contact details of Peter Kurzok, a Senior Lead Software Architect who builds apps for iPhone, iPad, and Mac in his free time."
 >
+  <style slot="head" is:inline set:html={edgeCss} />
+
   <Hero />
 
   <main>
