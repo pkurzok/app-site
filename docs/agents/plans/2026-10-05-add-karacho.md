@@ -124,44 +124,50 @@ None. The site is static and has no client-side JavaScript.
 Dependencies: None.
 
 **Tasks**:
-- [ ] Copy `~/ws-privat/Speedo/Screenshots/app-icon.png` to `public/icons/karacho.png`.
-- [ ] Append the Karacho object from *Desired End State* to `src/data/apps.json`, after the
+- [x] Copy `~/ws-privat/Speedo/Screenshots/app-icon.png` to `public/icons/karacho.png`.
+- [x] Append the Karacho object from *Desired End State* to `src/data/apps.json`, after the
       Inquizitive entry.
-- [ ] Run `npm run build` and `npm run check`, then the checks under *Automated Verification*
+- [x] Run `npm run build` and `npm run check`, then the checks under *Automated Verification*
       up to the commit.
-- [ ] Start `npm run preview` in the background and hand the URL to Peter for the checks under
+- [x] Start `npm run preview` in the background and hand the URL to Peter for the checks under
       *Manual Verification*. Stop the preview afterwards.
-- [ ] After Peter's confirmation, commit both files as "Add Karacho".
-- [ ] After the commit, push to `main`. This publishes the site.
-- [ ] Wait for the Cloudflare Pages build and run the live checks.
+- [x] After Peter's confirmation, commit both files as "Add Karacho".
+- [x] After the commit, push to `main`. This publishes the site.
+- [x] Wait for the Cloudflare Pages build and run the live checks.
 
 **Automated Verification**:
-- [ ] `sips -g pixelWidth -g pixelHeight public/icons/karacho.png` reports 1024 × 1024.
-- [ ] `cmp ~/ws-privat/Speedo/Screenshots/app-icon.png public/icons/karacho.png` reports no
+- [x] `sips -g pixelWidth -g pixelHeight public/icons/karacho.png` reports 1024 × 1024.
+- [x] `cmp ~/ws-privat/Speedo/Screenshots/app-icon.png public/icons/karacho.png` reports no
       difference.
-- [ ] `npm run build` exits 0.
-- [ ] `npm run check` exits 0 and `dist/icons/karacho.png` exists.
-- [ ] `jq 'length' src/data/apps.json` prints `5`, and `jq -r '.[-1].id' src/data/apps.json`
+- [x] `npm run build` exits 0.
+- [x] `npm run check` exits 0 and `dist/icons/karacho.png` exists.
+- [x] `jq 'length' src/data/apps.json` prints `5`, and `jq -r '.[-1].id' src/data/apps.json`
       prints `karacho`.
-- [ ] The existing entries are unchanged:
+- [x] The existing entries are unchanged:
       `diff <(git show HEAD:src/data/apps.json | jq '.[0:4]') <(jq '.[0:4]' src/data/apps.json)`
       prints nothing.
-- [ ] `grep -o 'class="app-row"' dist/index.html | wc -l` prints `5`.
-- [ ] `dist/index.html` contains `id="app-karacho"`, `Your GPS speed in big amber digits`,
+- [x] `grep -o 'class="app-row"' dist/index.html | wc -l` prints `5`.
+- [x] `dist/index.html` contains `id="app-karacho"`, `Your GPS speed in big amber digits`,
       `--accent: #FFB020` and two occurrences of `href="https://karacho.peterkurzok.de"`.
-- [ ] After the push: `curl -s https://apps.peterkurzok.de/ | grep -c 'id="app-karacho"'`
+- [x] After the push: `curl -s https://apps.peterkurzok.de/ | grep -c 'id="app-karacho"'`
       prints `1`, and `curl -sI https://apps.peterkurzok.de/icons/karacho.png` answers 200.
 
 **Manual Verification**:
-- [ ] In the local preview, the Karacho row sits below Inquizitive, and its tagline and call
+- [x] In the local preview, the Karacho row sits below Inquizitive, and its tagline and call
       to action are readable in light and in dark mode.
-- [ ] The row looks right at phone width (icon above the text) and at desktop width (icon
+- [x] The row looks right at phone width (icon above the text) and at desktop width (icon
       beside the text).
-- [ ] The icon and the call to action both open https://karacho.peterkurzok.de.
+- [x] The icon and the call to action both open https://karacho.peterkurzok.de.
 
 ## Implementation Notes
 
 During implementation, document user feedback, problems, and decisions here.
+
+- 2026-10-05: Implemented as planned, no deviations. Peter checked the local preview and
+  confirmed; committed as `8b4a393` and pushed to `main`.
+- The first live request for `/icons/karacho.png` answered 404 a few seconds after the new
+  HTML was served; every later request answered 200 with 1641574 bytes. The asset trailed the
+  HTML briefly during the Cloudflare Pages rollout.
 
 ## References
 
