@@ -24,11 +24,12 @@ channel is a data-only edit, no component changes needed.
 | File | Contents |
 | --- | --- |
 | `src/data/apps.json` | id (must match `[a-z0-9-]+`), name, tagline, description, icon path, accent color, link (or `null` + `badge` for unreleased apps) |
-| `src/data/talks.json` | one entry per talk-at-an-event: title, event, date, location, event link, optional video link, image |
+| `src/data/talks.json` | one entry per talk-at-an-event: title, description, event, date, location, event link, optional video link, image |
+| `src/data/speaking.json` | intro text above the talk cards, the stage photos next to it (each linking to its original), caption and photo credit |
 | `src/data/contact.json` | name, tagline, portrait, contact channels |
 
 Images live in `public/icons/` (app icons, 1024×1024) and `public/images/`
-(portrait, talk cards).
+(portrait, talk cards, stage photos).
 
 The "Upcoming" badge on a talk is derived from its `date` versus the **build**
 date, so it only updates on the next deploy.

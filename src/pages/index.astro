@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import AppRow from '../components/AppRow.astro';
 import TalkCard from '../components/TalkCard.astro';
+import TalksIntro from '../components/TalksIntro.astro';
 import ContactSheet from '../components/ContactSheet.astro';
 import apps from '../data/apps.json';
 import talks from '../data/talks.json';
@@ -62,6 +63,7 @@ const edgeCss = [
 
     <section class="talks container" aria-labelledby="talks-heading">
       <h2 class="section-title" id="talks-heading">Talks</h2>
+      <TalksIntro />
       <div class="grid">
         {sortedTalks.map((talk) => <TalkCard talk={talk} upcoming={isUpcoming(talk)} />)}
       </div>

@@ -1,0 +1,20 @@
+{
+  "intro": "I speak at iOS conferences about the security side of app development: what your app stores, how it talks to your backend, and how to tell a real device from a fake one.",
+  "photos": [
+    {
+      "src": "/images/swiftcon-2026-stage.jpg",
+      "alt": "Peter Kurzok speaking at the swiftCon 2026 lectern in Berlin, laptop open, microphone in hand",
+      "href": "https://www.flickr.com/photos/194372122@N07/55587054743/in/album-72177720336136523"
+    },
+    {
+      "src": "/images/swiftcon-2026-mic.jpg",
+      "alt": "Peter Kurzok with a microphone behind a sticker-covered laptop at swiftCon 2026",
+      "href": "https://www.flickr.com/photos/194372122@N07/55587350430/in/album-72177720336136523"
+    }
+  ],
+  "caption": "On stage at swiftCon 2026, Berlin",
+  "credit": {
+    "label": "Photos: next.app",
+    "href": "https://www.flickr.com/photos/194372122@N07/albums/72177720336136523"
+  }
+}

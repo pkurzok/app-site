@@ -2,6 +2,7 @@
   {
     "id": "mobile-security-iosdevuk-2026",
     "title": "Mobile Security Fundamentals: Build Apps That Fight Back",
+    "description": "Where attackers get in once your app is on their device, and the defences every iOS app should ship with.",
     "event": "iOSDevUK 2026",
     "date": "2026-09-07",
     "dateLabel": "September 7–10, 2026",
@@ -15,6 +16,7 @@
   {
     "id": "mobile-security-swiftcon-2026",
     "title": "Mobile Security Fundamentals: Build Apps That Fight Back",
+    "description": "Where attackers get in once your app is on their device, and the defences every iOS app should ship with.",
     "event": "swiftCon 2026",
     "date": "2026-10-07",
     "dateLabel": "October 7–9, 2026",
@@ -28,6 +30,7 @@
   {
     "id": "devicecheck-doios-2025",
     "title": "DeviceCheck – Securing your App's Communication",
+    "description": "How DeviceCheck lets your backend tell a genuine install of your app from a script or a tampered client.",
     "event": "Do iOS 2025",
     "date": "2025-11-12",
     "dateLabel": "November 12–13, 2025",
