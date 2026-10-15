@@ -1,0 +1,117 @@
+---
+import speaking from '../data/speaking.json';
+
+// Sits between the "Talks" heading and the card grid: a short pitch on the left, a
+// pair of portrait stage photos on the right. Each photo links to its Flickr original.
+---
+
+<div class="intro">
+  <p class="lede">
+    {speaking.intro} If you run a conference or meetup and want a talk like that,{' '}
+    <a href="#contact-heading">get in touch</a>.
+  </p>
+  <figure class="photos">
+    {
+      speaking.photos.map((photo) => (
+        <a class="photo" href={photo.href} rel="noopener">
+          <img src={photo.src} alt={photo.alt} width="800" height="1200" loading="lazy" decoding="async" />
+        </a>
+      ))
+    }
+    <figcaption>
+      {speaking.caption}
+      <span class="sep" aria-hidden="true">·</span>
+      <a href={speaking.credit.href} rel="noopener">{speaking.credit.label}</a>
+    </figcaption>
+  </figure>
+</div>
+
+<style>
+  .intro {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+    margin: -0.5rem 0 2.5rem;
+  }
+
+  .lede {
+    margin: 0;
+    max-width: 52ch;
+    color: var(--text-muted);
+  }
+
+  .lede a {
+    color: var(--text);
+    text-decoration-color: var(--text-muted);
+    text-underline-offset: 3px;
+  }
+
+  .photos {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.875rem;
+    align-items: start;
+  }
+
+  .photo {
+    display: block;
+    border-radius: calc(var(--radius) * 0.75);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform 0.15s ease;
+  }
+
+  /* The second photo hangs lower, so the pair reads as a pair, not a grid */
+  .photo:nth-child(2) {
+    margin-top: 2.25rem;
+  }
+
+  .photo:hover,
+  .photo:focus-visible {
+    transform: translateY(-2px);
+  }
+
+  .photo img {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    background: var(--surface);
+  }
+
+  figcaption {
+    grid-column: 1 / -1;
+    margin-top: 0.25rem;
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+  }
+
+  figcaption a {
+    color: inherit;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+  }
+
+  figcaption a:hover,
+  figcaption a:focus-visible {
+    color: var(--text);
+  }
+
+  .sep {
+    margin-inline: 0.35rem;
+  }
+
+  @media (min-width: 46rem) {
+    .intro {
+      grid-template-columns: 1.1fr 1fr;
+      gap: 3rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .photo:hover,
+    .photo:focus-visible {
+      transform: none;
+    }
+  }
+</style>

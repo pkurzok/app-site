@@ -4,6 +4,7 @@ import Icon from './Icon.astro';
 interface Talk {
   id: string;
   title: string;
+  description: string;
   event: string;
   date: string;
   dateLabel: string;
@@ -58,6 +59,7 @@ const eventIsCardTarget = !talk.videoLink;
       <span class="sep" aria-hidden="true">·</span>
       <span>{talk.location}</span>
     </p>
+    <p class="description">{talk.description}</p>
     {
       (talk.videoLink || talk.slidesLink) && (
         <p class="links">
@@ -192,6 +194,13 @@ const eventIsCardTarget = !talk.videoLink;
 
   .sep {
     margin-inline: 0.35rem;
+  }
+
+  .description {
+    margin: 0.7rem 0 0;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--text-muted);
   }
 
   .links {
