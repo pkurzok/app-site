@@ -33,6 +33,17 @@
     "badge": null
   },
   {
+    "id": "the-shed",
+    "name": "The Shed",
+    "tagline": "Band practice: mute your part",
+    "description": "Learn the song before rehearsal. The Shed splits any song you own into stems, mutes your part and lets you play along with the rest of the band. Loop a section, slow it down, change the key, read the chords. Everything runs on your iPad or Mac: no account, no upload.",
+    "icon": "/icons/the-shed.png",
+    "accent": "#F6B73C",
+    "link": "https://shed.peterkurzok.de",
+    "linkLabel": "shed.peterkurzok.de",
+    "badge": null
+  },
+  {
     "id": "inquizitive",
     "name": "Inquizitive",
     "tagline": "A fact-checked quiz on anything you're curious about",
